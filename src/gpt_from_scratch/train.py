@@ -236,9 +236,9 @@ train_losses, val_losses, tokens_seen = train_model_simple(
     val_loader=val_loader,
     optimizer=optimizer,
     device=device,
-    num_epochs=10,
+    num_epochs=1,
     eval_freq=5,
-    eval_iter=5,
+    eval_iter=1,
     start_context="Every effort moves you",
     tokenizer=tokenizer,
 )

@@ -128,19 +128,20 @@ model = GPTModel(
     qkv_bias=config["qkv_bias"],
 )
 
-# --- Try it ---
-torch.manual_seed(123)
+if __name__ == "__main__":
 
-start_context = "what is your name?"
-encoded = text_to_token_ids(start_context)
-print("Encoded input:", encoded)
+    torch.manual_seed(123)
 
-out = generate_text_simple(
-    model=model,
-    idx=encoded,
-    max_new_tokens=10,
-    context_size=1024,
-)
+    start_context = "what is your name?"
+    encoded = text_to_token_ids(start_context)
+    print("Encoded input:", encoded)
 
-print("Output token IDs:", out)
-print("Decoded text:", token_ids_to_text(out))
+    out = generate_text_simple(
+        model=model,
+        idx=encoded,
+        max_new_tokens=10,
+        context_size=1024,
+    )
+
+    print("Output token IDs:", out)
+    print("Decoded text:", token_ids_to_text(out))
