@@ -1,0 +1,23 @@
+[project]
+name = "gpt-from-scratch"
+version = "0.1.0"
+description = "A from-scratch PyTorch implementation of a GPT-style LLM, following Sebastian Raschka's Build a Large Language Model (From Scratch)"
+readme = "README.md"
+authors = [
+    { name = "Ali", email = "zamaniali1995@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "numpy>=2.5.3",
+    "pyyaml>=6.0.3",
+    "tiktoken>=0.14.0",
+    "torch>=2.14.0",
+    "tqdm>=4.70.1",
+]
+
+[project.scripts]
+gpt-from-scratch = "gpt_from_scratch:main"
+
+[build-system]
+requires = ["uv_build>=0.12.18,<0.13.0"]
+build-backend = "uv_build"
