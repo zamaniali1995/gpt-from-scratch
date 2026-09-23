@@ -1,0 +1,9 @@
+# GPT model configuration (GPT-2 small, 124M)
+model:
+  vocab_size: 50257      # BPE tokenizer vocabulary size (GPT-2 tokenizer)
+  context_length: 1024   # max sequence length the model can handle
+  emb_dim: 768            # embedding dimension
+  n_heads: 12             # number of attention heads
+  n_layers: 12            # number of transformer blocks
+  drop_rate: 0.1          # dropout rate
+  qkv_bias: false         # whether Q/K/V linear layers use bias terms
