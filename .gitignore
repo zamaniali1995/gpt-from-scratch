@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+
+# uv
+.venv/
+# Note: uv.lock should NOT be ignored — commit it for reproducibility
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Model weights & large artifacts
+*.pth
+*.pt
+*.bin
+*.safetensors
+checkpoints/
+
+# Data
+*.csv
+*.json
+!config.yaml
+data/raw/
+data/processed/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# Environment
+.env
+.python-version
