@@ -1,5 +1,8 @@
+"""Causal multi-head self-attention — the core operation of GPT."""
+
 import torch
 import torch.nn as nn
+
 
 class MultiHeadAttention(nn.Module):
     """
@@ -18,14 +21,15 @@ class MultiHeadAttention(nn.Module):
         n_heads: number of attention heads
         qkv_bias: whether the Q/K/V linear projections use a bias term
     """
+
     def __init__(
-            self, 
-            d_in: int,
-            d_out: int,
-            context_length: int,
-            dropout: float,
-            n_heads: int,
-            qkv_bias: bool,
+        self,
+        d_in: int,
+        d_out: int,
+        context_length: int,
+        dropout: float,
+        n_heads: int,
+        qkv_bias: bool = False,
     ):
         super().__init__()
         assert d_out % n_heads == 0, "d_out must be divisible by n_heads"
@@ -64,14 +68,18 @@ class MultiHeadAttention(nn.Module):
         keys = keys.view(batch_size, num_tokens, self.n_heads, self.head_dim).transpose(1, 2)
         values = values.view(batch_size, num_tokens, self.n_heads, self.head_dim).transpose(1, 2)
 
+        # Scaled dot-product attention scores, shape (batch, heads, tokens, tokens)
         attn_scores = queries @ keys.transpose(2, 3)
 
+        # Causal mask: block the upper triangle so no token sees the future
         mask_bool = self.mask.bool()[:num_tokens, :num_tokens]
         attn_scores.masked_fill_(mask_bool, -torch.inf)
 
+        # Scale by sqrt(head_dim) and normalize into attention weights
         attn_weights = torch.softmax(attn_scores / keys.shape[-1] ** 0.5, dim=-1)
         attn_weights = self.dropout(attn_weights)
 
+        # Weighted sum of values, then merge heads back into d_out
         context_vec = (attn_weights @ values).transpose(1, 2)
         context_vec = context_vec.contiguous().view(batch_size, num_tokens, self.d_out)
 

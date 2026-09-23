@@ -6,7 +6,7 @@ __pycache__/
 .Python
 .pytest_cache/
 
-# uv
+# venvs
 .venv/
 # Note: uv.lock should NOT be ignored — commit it for reproducibility
 
@@ -20,12 +20,15 @@ __pycache__/
 *.safetensors
 checkpoints/
 
+# Logs
+*.log
+
 # Data
 *.csv
 *.json
-!config.yaml
 data/raw/
 data/processed/
+# NOTE: data/the-verdict.txt is intentionally tracked (small sample text)
 
 # OS / editor
 .DS_Store

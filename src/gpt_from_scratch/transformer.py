@@ -1,6 +1,10 @@
+"""Transformer building blocks: normalization, activation, FFN, and the block itself."""
+
 import torch
 import torch.nn as nn
-from gpt_from_scratch.multi_head_attention import MultiHeadAttention
+
+from gpt_from_scratch.attention import MultiHeadAttention
+
 
 class LayerNorm(nn.Module):
     """
@@ -29,10 +33,15 @@ class GELU(nn.Module):
     """GELU activation function (smooth alternative to ReLU, used throughout GPT-2)."""
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return 0.5 * x * (
-            1.0 + torch.tanh(
-                torch.sqrt(torch.tensor(2.0 / torch.pi))
-                * (x + 0.044715 * torch.pow(x, 3))
+        # Tanh approximation of GELU (the exact form GPT-2 uses)
+        return (
+            0.5
+            * x
+            * (
+                1.0
+                + torch.tanh(
+                    torch.sqrt(torch.tensor(2.0 / torch.pi)) * (x + 0.044715 * torch.pow(x, 3))
+                )
             )
         )
 
@@ -73,7 +82,7 @@ class TransformerBlock(nn.Module):
     ):
         super().__init__()
         self.norm1 = LayerNorm(d_in)
-        self.attn =MultiHeadAttention(
+        self.attn = MultiHeadAttention(
             d_in=d_in,
             d_out=d_out,
             context_length=context_length,

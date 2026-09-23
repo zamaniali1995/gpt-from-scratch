@@ -1,0 +1,29 @@
+# GPT-2 small configuration (the "124M" architecture)
+#
+# With the untied output head used here, the parameter count is ~163M.
+# All hyperparameters — model architecture AND training — live in this
+# file so an experiment is fully described by a single YAML document.
+
+model:
+  vocab_size: 50257      # BPE tokenizer vocabulary size (GPT-2 tokenizer)
+  context_length: 1024   # max sequence length the model can handle
+  emb_dim: 768           # embedding dimension
+  n_heads: 12            # number of attention heads
+  n_layers: 12           # number of transformer blocks
+  drop_rate: 0.1         # dropout rate
+  qkv_bias: false        # whether Q/K/V linear layers use bias terms
+
+training:
+  epochs: 1              # full passes over the training data
+  batch_size: 2          # sequences per batch
+  max_length: 256        # sequence length of each training chunk
+  stride: 256            # sliding-window stride (256 = no overlap)
+  learning_rate: 0.0004  # AdamW learning rate
+  weight_decay: 0.1      # AdamW weight decay
+  eval_freq: 5           # evaluate train/val loss every N optimizer steps
+  eval_iter: 1           # number of batches used per loss evaluation
+  train_ratio: 0.9       # fraction of text used for training (rest = validation)
+  start_context: "Every effort moves you"  # prompt for the sample generated after each epoch
+  seed: 123              # random seed for reproducibility
+  data_path: "data/the-verdict.txt"       # training text (downloaded if missing)
+  checkpoint_dir: "checkpoints"           # where the trained weights are saved
