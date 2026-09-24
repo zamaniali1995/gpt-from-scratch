@@ -13,6 +13,7 @@ dependencies = [
     "tiktoken>=0.5",
     "pyyaml>=6.0",
     "tqdm>=4.65",
+    "matplotlib>=3.7",
 ]
 
 [project.optional-dependencies]
